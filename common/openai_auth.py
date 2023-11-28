@@ -43,3 +43,32 @@ def send_chat_completion(
             "temperature": temperature,
         },
     )
+
+def send_embeddings(
+    input_msg: str, model_version: str
+):
+    return make_request(
+        endpoint="embeddings", data={"input": input_msg, "model": model_version}
+    )
+
+
+def send_transcription(
+    audio_file_name: str,
+    audio_file: bytes,
+    language: str,
+    response_format: str = "json",
+    model: str = "whisper-1",
+    temperature: float = 0,
+):
+    return make_request(
+        endpoint="audio/transcriptions",
+        files={
+            "file": (audio_file_name, audio_file),
+        },
+        data={
+            "model": model,
+            "language": language,
+            "temperature": temperature,
+            "response_format": response_format,
+        },
+    )
